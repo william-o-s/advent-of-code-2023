@@ -1,5 +1,3 @@
-use std::fs;
-
 fn parse_using_loop(substring: &str) -> u32 {
     let mut first_num: Option<char> = None;
     let mut last_num: Option<char> = None;
@@ -20,7 +18,7 @@ fn parse_using_loop(substring: &str) -> u32 {
     (first_num * 10) + last_num
 }
 
-fn parse_using_vec(substring: &str) -> Result<u32, String> {
+pub fn parse_using_vec(substring: &str) -> Result<u32, String> {
     let numbers = substring
         .chars()
         .filter_map(|c| c.to_digit(10))
@@ -33,18 +31,4 @@ fn parse_using_vec(substring: &str) -> Result<u32, String> {
     let first = numbers.first().unwrap_or(&0);
     let last = numbers.last().unwrap_or(&0);
     Ok((first * 10) + last)
-}
-
-fn main() {
-    let filepath = "src/input.txt";
-
-    let contents = fs::read_to_string(filepath)
-        .expect("Please provide a valid input.txt file.");
-
-    let mut total = 0;
-    for substring in contents.lines() {
-        total += parse_using_vec(substring).unwrap_or(0);
-    }
-
-    println!("Total: {total}");
 }
