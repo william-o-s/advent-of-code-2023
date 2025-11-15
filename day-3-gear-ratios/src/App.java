@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +74,8 @@ public class App {
         // ....*****...
     }
 
+    public
+
     private static List<Number> extractNumbers(String line) {
         List<Number> numbers = new ArrayList<Number>();
 
@@ -101,17 +104,18 @@ public class App {
         return indices;
     }
 
-    private static boolean checkLine(Number number, String line) {
+    private static int checkLine(Number number, String line) {
         // Get locations of all the symbols
         List<Integer> symbols = extractSymbols(line);
 
         // Check if any symbol overlaps the number - since horizontal, check horizontal overlap
+        int total = 0;
         for (int symbol : symbols) {
             if (number.adjacent(symbol))
-                return true;
+                total++;
         }
 
-        return false;
+        return total;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -137,9 +141,11 @@ public class App {
 
             // For each number, check if the current line, previous line, or next line triggers it
             for (Number number : numbers) {
-                if (checkLine(number, previousLine)
-                    || checkLine(number, currentLine)
-                    || checkLine(number, nextLine)
+                int total = Integer.sum(checkLine(number, previousLine), checkLine(number, currentLine)
+
+                if ( > 0
+                    ||  > 0
+                    ||  > 0
                 ) {
                     // Add each triggered number to the total
                     // System.out.println("Adding " + number.getNumber());
@@ -161,7 +167,7 @@ public class App {
             }
         }
 
-        System.out.println("Total: " + total);
+        System.out.println("Part 1 Total: " + total);
         System.out.println("Lines: " + lines);
 
         inputFile.close();
